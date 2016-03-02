@@ -6,6 +6,10 @@ import android.support.v7.widget.Toolbar;
 public interface MainView
 {
     public FragmentManager getSupportFragmentManager();
+
+    public void setUserImg(String path);
+
+    public void setUserName(String name);
     
     public void showToast(String msg);
     

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <include layout="@layout/toolbar"/>
+
+    <RelativeLayout
+        android:background="@color/blue"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_img"
+            android:src="@drawable/myface"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            android:text="姓名："
+            android:id="@+id/user_name"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:text=""
+            android:textColor="@color/black"
+            android:id="@+id/user_name_hint"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/user_name"
+            android:layout_toEndOf="@+id/user_name"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            android:text="学号："
+            android:layout_marginTop="10dp"
+            android:id="@+id/user_xuehao"
+            android:layout_below="@+id/user_name"
+            android:layout_toLeftOf="@+id/user_name_hint"
+            android:layout_toStartOf="@+id/user_name_hint"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:text=""
+            android:textColor="@color/black"
+            android:id="@+id/user_xuehao_hint"
+            android:layout_alignTop="@+id/user_xuehao"
+            android:layout_toRightOf="@+id/user_xuehao"
+            android:layout_toEndOf="@+id/user_xuehao"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

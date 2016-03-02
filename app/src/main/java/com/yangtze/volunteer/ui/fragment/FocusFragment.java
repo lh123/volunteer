@@ -69,7 +69,7 @@ public class FocusFragment extends Fragment
                     NewsModel model=new NewsModel();
                     list=model.getFocus(NewsModel.FOCUS);
                     adapter.setData(list);
-                    App.getMainHandler().post(new Runnable(){
+                    App.getApp().getMainHandler().post(new Runnable(){
 
                             @Override
                             public void run()

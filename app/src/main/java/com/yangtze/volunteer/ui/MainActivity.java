@@ -1,6 +1,8 @@
 package com.yangtze.volunteer.ui;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
 import com.yangtze.volunteer.R;
 import com.yangtze.volunteer.mvp.views.MainView;
 import android.support.v7.widget.Toolbar;
@@ -9,11 +11,13 @@ import com.yangtze.volunteer.utils.ToolbarUtils;
 import android.support.design.widget.NavigationView;
 import android.view.View.OnClickListener;
 import android.view.View;
-import android.content.Intent;
 import android.support.v7.app.ActionBarDrawerToggle;
 import com.yangtze.volunteer.mvp.presenter.impl.MainPresenter;
+
+import android.widget.TextView;
 import android.widget.Toast;
-import com.yangtze.volunteer.model.NewsModel;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements MainView
 {
@@ -21,6 +25,9 @@ public class MainActivity extends AppCompatActivity implements MainView
     private Toolbar toolbar;
     private NavigationView navigationView;
     private MainPresenter presenter;
+    private CircleImageView circleImageView;
+    private TextView userName;
+    private TextView userSign;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,15 +40,6 @@ public class MainActivity extends AppCompatActivity implements MainView
         initToolbar();
         initDrawer();
         presenter=new MainPresenter(this);
-//        new Thread(new Runnable(){
-//
-//                @Override
-//                public void run()
-//                {
-//                    NewsModel m=new NewsModel();
-//                    m.getFocus();
-//                }
-//            }).start();
         presenter.onCreate(savedInstanceState);
     }
 
@@ -55,16 +53,25 @@ public class MainActivity extends AppCompatActivity implements MainView
 
     private void initDrawer()
     {
-        navigationView.getHeaderView(0).findViewById(R.id.btn_login).setOnClickListener(new OnClickListener(){
-
-                @Override
-                public void onClick(View p1)
-                {
-                    Intent i=new Intent();
-                    i.setClass(MainActivity.this,LoginActivity.class);
-                    startActivity(i);
-                }
-            });
+        circleImageView= (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.user_img);
+        userName= (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_name);
+        userSign= (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_sign);
+        circleImageView.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                presenter.onUserImgClick();
+            }
+        });
+        userSign.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                presenter.onUserSignClick();
+            }
+        });
     }
 
     @Override
@@ -73,7 +80,19 @@ public class MainActivity extends AppCompatActivity implements MainView
         presenter.onDestroy();
         super.onDestroy();
     }
-    
+
+    @Override
+    public void setUserImg(String path)
+    {
+        Glide.with(this).load(path).into(circleImageView);
+    }
+
+    @Override
+    public void setUserName(String name)
+    {
+        userName.setText(name);
+    }
+
     @Override
     public void showToast(String msg)
     {
