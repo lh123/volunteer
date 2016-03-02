@@ -6,6 +6,7 @@ public class User extends BmobUser
     private String xuehao;
     private String sex;
     private String img;
+    private int coint;
 
     public void setXuehao(String xuehao)
     {
@@ -35,5 +36,15 @@ public class User extends BmobUser
     public String getImg()
     {
         return img;
+    }
+
+    public int getCoint()
+    {
+        return coint;
+    }
+
+    public void setCoint(int coint)
+    {
+        this.coint = coint;
     }
 }
