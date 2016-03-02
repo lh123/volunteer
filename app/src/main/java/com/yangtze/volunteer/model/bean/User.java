@@ -7,6 +7,7 @@ public class User extends BmobUser
     private String sex;
     private String img;
     private int coint;
+    private String lastSign;
 
     public void setXuehao(String xuehao)
     {
@@ -46,5 +47,15 @@ public class User extends BmobUser
     public void setCoint(int coint)
     {
         this.coint = coint;
+    }
+
+    public String getLastSign()
+    {
+        return lastSign;
+    }
+
+    public void setLastSign(String lastSign)
+    {
+        this.lastSign = lastSign;
     }
 }

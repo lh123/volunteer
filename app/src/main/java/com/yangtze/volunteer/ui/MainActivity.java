@@ -84,13 +84,26 @@ public class MainActivity extends AppCompatActivity implements MainView
     @Override
     public void setUserImg(String path)
     {
-        Glide.with(this).load(path).into(circleImageView);
+        if(path==null)
+        {
+            circleImageView.setImageResource(R.drawable.myface);
+        }
+        else
+        {
+            Glide.with(this).load(path).into(circleImageView);
+        }
     }
 
     @Override
     public void setUserName(String name)
     {
         userName.setText(name);
+    }
+
+    @Override
+    public void setSignState(boolean state)
+    {
+        userSign.setText(state==true?"已签到":"签到！");
     }
 
     @Override

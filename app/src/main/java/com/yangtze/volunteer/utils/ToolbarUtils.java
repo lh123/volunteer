@@ -1,15 +1,17 @@
 package com.yangtze.volunteer.utils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
+
 import com.yangtze.volunteer.R;
 
 public class ToolbarUtils
 {
-    public static void initToolbar(Toolbar toolbar,AppCompatActivity aty)
+    public static void initToolbar(Toolbar toolbar, final AppCompatActivity aty)
     {
         if(toolbar==null||aty==null)
             return;
-        toolbar.setTitle(R.string.app_name);
         aty.setSupportActionBar(toolbar);
         if(aty.getSupportActionBar()!=null)
         {

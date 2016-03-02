@@ -2,6 +2,8 @@ package com.yangtze.volunteer.ui;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import com.yangtze.volunteer.R;
+
+import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.EditText;
 import com.yangtze.volunteer.mvp.views.LoginView;
@@ -11,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.View;
 import android.content.Intent;
 import com.yangtze.volunteer.mvp.presenter.impl.LoginPresenter;
+import com.yangtze.volunteer.utils.ToolbarUtils;
 
 public class LoginActivity extends AppCompatActivity implements LoginView
 {
@@ -18,6 +21,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView
     private EditText etAccount;
     private EditText etPassword;
     private TextView tvRegister;
+    private Toolbar toolbar;
     
     private LoginPresenter presenter;
     
@@ -26,6 +30,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        initToolbar();
         etAccount=(EditText) findViewById(R.id.et_username);
         etPassword=(EditText) findViewById(R.id.et_password);
         btnLogin=(Button) findViewById(R.id.btn_login);
@@ -52,6 +57,19 @@ public class LoginActivity extends AppCompatActivity implements LoginView
          presenter.onCreate(savedInstanceState);
     }
 
+    private void initToolbar()
+    {
+        toolbar= (Toolbar) findViewById(R.id.toolbar);
+        ToolbarUtils.initToolbar(toolbar, this);
+        toolbar.setNavigationOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                finishActivity();
+            }
+        });
+    }
     @Override
     protected void onDestroy()
     {

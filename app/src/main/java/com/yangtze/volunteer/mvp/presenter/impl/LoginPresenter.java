@@ -6,7 +6,7 @@ import com.yangtze.volunteer.mvp.presenter.Presenter;
 import com.yangtze.volunteer.mvp.views.LoginView;
 import com.yangtze.volunteer.model.bean.User;
 import cn.bmob.v3.listener.SaveListener;
-import com.yangtze.volunteer.domain.event.LoginEvent;
+import com.yangtze.volunteer.domain.event.UserEvent;
 import com.yangtze.volunteer.domain.BusProvide;
 
 public class LoginPresenter implements Presenter
@@ -39,9 +39,8 @@ public class LoginPresenter implements Presenter
                 public void onSuccess()
                 {
                     mView.showToast("登录成功");
-                    LoginEvent e=new LoginEvent();
-                    e.user=u;
-                    e.status=LoginEvent.SUCCESS;
+                    UserEvent e=new UserEvent();
+                    e.status=UserEvent.ONLINE;
                     BusProvide.getBus().post(e);
                     mView.finishActivity();
                 }

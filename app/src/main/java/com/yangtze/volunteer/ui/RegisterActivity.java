@@ -2,11 +2,15 @@ package com.yangtze.volunteer.ui;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.yangtze.volunteer.R;
+
+import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 import android.widget.Button;
 import com.yangtze.volunteer.mvp.views.RegisterView;
 import android.widget.Toast;
 import com.yangtze.volunteer.mvp.presenter.impl.RegisterPresenter;
+import com.yangtze.volunteer.utils.ToolbarUtils;
+
 import android.view.View.OnClickListener;
 import android.view.View;
 
@@ -17,6 +21,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView
     private EditText etPhone;
     private EditText etXuehao;
     private Button btnRegister;
+    private Toolbar toolbar;
 
     private RegisterPresenter presenter;
     
@@ -25,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        initToolbar();
         etAccount = (EditText) findViewById(R.id.et_username);
         etPassword = (EditText) findViewById(R.id.et_password);
         etPhone = (EditText) findViewById(R.id.et_phone);
@@ -48,7 +54,21 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView
         presenter.onDestroy();
         super.onDestroy();
     }
-    
+
+    private void initToolbar()
+    {
+        toolbar= (Toolbar) findViewById(R.id.toolbar);
+        ToolbarUtils.initToolbar(toolbar, this);
+        toolbar.setNavigationOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                finishActivity();
+            }
+        });
+    }
+
     @Override
     public void setAccount(String account)
     {
