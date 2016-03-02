@@ -1,0 +1,41 @@
+package com.yangtze.volunteer.model;
+import java.util.ArrayList;
+import com.yangtze.volunteer.model.bean.NewsItem;
+import java.net.URL;
+import org.jsoup.nodes.Document;
+import org.jsoup.Jsoup;
+import java.net.MalformedURLException;
+import java.io.IOException;
+import org.jsoup.select.Elements;
+import org.jsoup.nodes.Element;
+
+public class NewsModel
+{
+    public static final String FOCUS="http://www.zgzyz.org.cn/node_54667.htm";
+    public static final String LOCATION="http://www.zgzyz.org.cn/node_24742.htm";
+    
+    public ArrayList<NewsItem> getFocus(String path)
+    {
+        ArrayList<NewsItem> list=new ArrayList<>();
+        try
+        {
+            URL url=new URL(path);
+            Document docu=Jsoup.parse(url, 3000);
+            Elements es= docu.getElementsByClass("listX_X");
+            Elements ess=es.get(0).getElementsByTag("li");
+            for(Element e:ess)
+            {
+                NewsItem item=new NewsItem();
+                item.setTitle(e.child(0).text());
+                item.setUrl(e.child(0).attr("href"));
+                item.setTime(e.child(2).text().replaceAll("\\[|\\]",""));
+                list.add(item);
+            }
+        }
+        catch (MalformedURLException e)
+        {}
+        catch (IOException e)
+        {}
+        return list;
+    }
+}
