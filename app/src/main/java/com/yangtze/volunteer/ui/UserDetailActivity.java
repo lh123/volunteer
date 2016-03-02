@@ -163,6 +163,7 @@ public class UserDetailActivity extends AppCompatActivity
 
     private void initData()
     {
+        user=BmobUser.getCurrentUser(this,User.class);
         if (user.getImg() != null)
         {
             Glide.with(this).load(user.getImg()).into(circleImageView);

@@ -3,10 +3,11 @@ import cn.bmob.v3.BmobUser;
 
 public class User extends BmobUser
 {
+    private String name;
     private String xuehao;
     private String sex;
     private String img;
-    private int coint;
+    private Integer coint;
     private String lastSign;
 
     public void setXuehao(String xuehao)
@@ -57,5 +58,15 @@ public class User extends BmobUser
     public void setLastSign(String lastSign)
     {
         this.lastSign = lastSign;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
     }
 }
