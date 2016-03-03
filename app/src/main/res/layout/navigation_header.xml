@@ -21,16 +21,19 @@
 		android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:id="@+id/user_name"
+		android:gravity="center_horizontal"
 		android:layout_marginTop="5dp"
 		android:layout_below="@+id/user_img"
 		android:layout_alignLeft="@+id/user_img"
-		android:layout_alignStart="@+id/user_img"/>
+		android:layout_alignStart="@+id/user_img"
+		android:layout_alignRight="@+id/user_img"
+		android:layout_alignEnd="@+id/user_img"/>
 
-	<TextView
+	<ImageView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:id="@+id/user_sign"
+		android:src="@drawable/ic_sign"
 		android:layout_alignTop="@+id/user_name"
 		android:layout_alignParentRight="true"
 		android:layout_alignParentEnd="true"

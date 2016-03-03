@@ -9,33 +9,33 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.yangtze.volunteer.R;
 import com.yangtze.volunteer.model.bean.User;
 import com.yangtze.volunteer.model.bean.VolunteerActive;
-import com.yangtze.volunteer.ui.ActiveDetailActivity;
-import com.yangtze.volunteer.ui.adapter.ActiveFollowRecyclerViewAdapter;
+import com.yangtze.volunteer.ui.adapter.ActiveRecyclerViewAdapter;
 
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by liuhui on 2016/3/3.
  */
-public class ActiveFollowFragment extends Fragment
+public class JointedFragment extends Fragment
 {
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
-    private ActiveFollowRecyclerViewAdapter adapter;
+    private ActiveRecyclerViewAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view=inflater.inflate(R.layout.recyclerview,container,false);
+        View view = inflater.inflate(R.layout.recyclerview,container,false);
         swipeRefreshLayout= (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
         recyclerView= (RecyclerView) view.findViewById(R.id.recycler_view);
         return view;
@@ -51,13 +51,20 @@ public class ActiveFollowFragment extends Fragment
 
     private void refreshData()
     {
-        BmobQuery<User> query=new BmobQuery<>();
-        final VolunteerActive active = ((ActiveDetailActivity) getActivity()).getActive();
-        query.addWhereRelatedTo("attendee",new BmobPointer(active));
-        query.findObjects(getContext(), new FindListener<User>()
+        User user= BmobUser.getCurrentUser(getContext(),User.class);
+        if(user==null)
+        {
+            Toast.makeText(getContext(),"未登录",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        BmobQuery<VolunteerActive> query=new BmobQuery<>();
+        BmobQuery<User> innerQuery=new BmobQuery<>();
+        innerQuery.addWhereEqualTo("objectId",user.getObjectId());
+        query.addWhereMatchesQuery("attendee","_User",innerQuery);
+        query.findObjects(getContext(), new FindListener<VolunteerActive>()
         {
             @Override
-            public void onSuccess(List<User> list)
+            public void onSuccess(List<VolunteerActive> list)
             {
                 adapter.setList(list);
                 adapter.notifyDataSetChanged();
@@ -72,30 +79,14 @@ public class ActiveFollowFragment extends Fragment
         });
     }
 
+
+
     private void initRecyclerView()
     {
         LinearLayoutManager lm=new LinearLayoutManager(getContext());
         lm.setOrientation(LinearLayoutManager.VERTICAL);
-        adapter = new ActiveFollowRecyclerViewAdapter();
-        recyclerView.setAdapter(adapter);
+        adapter=new ActiveRecyclerViewAdapter();
         recyclerView.setLayoutManager(lm);
-        swipeRefreshLayout.post(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                swipeRefreshLayout.setRefreshing(true);
-            }
-        });
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
-        {
-            @Override
-            public void onRefresh()
-            {
-                refreshData();
-            }
-        });
+        recyclerView.setAdapter(adapter);
     }
-
-
 }

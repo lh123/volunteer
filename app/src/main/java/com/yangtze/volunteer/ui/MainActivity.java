@@ -15,6 +15,7 @@ import android.view.View;
 import android.support.v7.app.ActionBarDrawerToggle;
 import com.yangtze.volunteer.mvp.presenter.impl.MainPresenter;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements MainView
     private MainPresenter presenter;
     private CircleImageView circleImageView;
     private TextView userName;
-    private TextView userSign;
+    private ImageView userSign;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements MainView
     {
         circleImageView= (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.user_img);
         userName= (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_name);
-        userSign= (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_sign);
+        userSign= (ImageView) navigationView.getHeaderView(0).findViewById(R.id.user_sign);
         circleImageView.setOnClickListener(new OnClickListener()
         {
             @Override
@@ -85,6 +86,9 @@ public class MainActivity extends AppCompatActivity implements MainView
                         return true;
                     case R.id.home:
                         presenter.onHoneIttemClick();
+                        return true;
+                    case R.id.jointed:
+                        presenter.onJoinedIttemClick();
                         return true;
                 }
                 return false;
@@ -119,9 +123,17 @@ public class MainActivity extends AppCompatActivity implements MainView
     }
 
     @Override
-    public void setSignState(boolean state)
+    public void setSignState(Boolean state)
     {
-        userSign.setText(state==true?"已签到":"签到！");
+        if (state==null)
+        {
+            userSign.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            userSign.setVisibility(View.VISIBLE);
+            userSign.setImageResource(state==true?R.drawable.ic_already_sign:R.drawable.ic_sign);
+        }
     }
 
     @Override

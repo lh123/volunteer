@@ -12,6 +12,7 @@
         android:id="@+id/floatButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:src="@drawable/ic_post"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"

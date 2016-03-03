@@ -8,7 +8,7 @@ public interface MainView
     public FragmentManager getSupportFragmentManager();
     public void setUserImg(String path);
     public void setUserName(String name);
-    public void setSignState(boolean state);
+    public void setSignState(Boolean state);
     public void showToast(String msg);
     public void closeDrawer();
     public void setTitle(String title);

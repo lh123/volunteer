@@ -16,6 +16,7 @@ import com.yangtze.volunteer.mvp.views.MainView;
 import com.yangtze.volunteer.ui.LoginActivity;
 import com.yangtze.volunteer.ui.UserDetailActivity;
 import com.yangtze.volunteer.ui.fragment.ActiveFragment;
+import com.yangtze.volunteer.ui.fragment.JointedFragment;
 import com.yangtze.volunteer.ui.fragment.ViewPagerFragment;
 
 import java.text.SimpleDateFormat;
@@ -36,7 +37,7 @@ public class MainPresenter implements Presenter
     {
         this.mView = mView;
         context= (Context) mView;
-        fragments=new Fragment[]{new ViewPagerFragment(),new ActiveFragment()};
+        fragments=new Fragment[]{new ViewPagerFragment(),new ActiveFragment(),new JointedFragment()};
     }
     
     @Override
@@ -64,7 +65,7 @@ public class MainPresenter implements Presenter
             mView.showToast("当前未登录");
             mView.setUserImg(null);
             mView.setUserName("点击头像登陆");
-            mView.setSignState(false);
+            mView.setSignState(null);
         }
         else
         {
@@ -101,7 +102,7 @@ public class MainPresenter implements Presenter
         {
             User newUser=new User();
             newUser.setLastSign(time);
-            newUser.setCoint(currentUser.getCoint() + 2);
+            newUser.setCoint(currentUser.getCoint()==null?0:currentUser.getCoint() + 2);
             newUser.update(context, currentUser.getObjectId(), new UpdateListener()
             {
                 @Override
@@ -165,6 +166,16 @@ public class MainPresenter implements Presenter
             fragments[0]=new ViewPagerFragment();
         }
         mView.getSupportFragmentManager().beginTransaction().replace(R.id.container,fragments[0]).commit();
+        mView.setTitle(context.getResources().getString(R.string.app_name));
+        mView.closeDrawer();
+    }
+    public void onJoinedIttemClick()
+    {
+        if(fragments[2]==null)
+        {
+            fragments[2]=new JointedFragment();
+        }
+        mView.getSupportFragmentManager().beginTransaction().replace(R.id.container,fragments[2]).commit();
         mView.setTitle(context.getResources().getString(R.string.app_name));
         mView.closeDrawer();
     }

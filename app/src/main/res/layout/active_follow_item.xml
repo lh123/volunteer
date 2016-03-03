@@ -8,21 +8,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
-            android:gravity="center|right"
-            android:textColor="@color/black"
-            android:id="@+id/rank"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="20.0dip"
-            android:layout_centerVertical="true"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_img"
-            android:layout_width="34.0dp"
-            android:layout_height="34.0dp"
-            android:layout_marginLeft="8.0dp"
-            android:layout_toRightOf="@id/rank"
+            android:layout_width="65.0dp"
+            android:layout_height="65.0dp"
+            android:layout_margin="10.0dp"
             android:layout_centerVertical="true"/>
 
         <LinearLayout
@@ -42,13 +33,17 @@
 
             <TextView
                 android:textColor="@color/gray"
-                android:id="@+id/message"
-                android:visibility="gone"
+                android:id="@+id/user_xuehao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2.0dp"/>
 
         </LinearLayout>
+        <View
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?dividerHorizontal"/>
     </RelativeLayout>
 
 </FrameLayout>
