@@ -3,6 +3,7 @@ package com.yangtze.volunteer.mvp.presenter.impl;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
@@ -14,6 +15,7 @@ import com.yangtze.volunteer.mvp.presenter.Presenter;
 import com.yangtze.volunteer.mvp.views.MainView;
 import com.yangtze.volunteer.ui.LoginActivity;
 import com.yangtze.volunteer.ui.UserDetailActivity;
+import com.yangtze.volunteer.ui.fragment.ActiveFragment;
 import com.yangtze.volunteer.ui.fragment.ViewPagerFragment;
 
 import java.text.SimpleDateFormat;
@@ -26,7 +28,7 @@ import cn.bmob.v3.listener.UpdateListener;
 public class MainPresenter implements Presenter
 {
     private MainView mView;
-    private ViewPagerFragment viewpagerFragment;
+    private Fragment[] fragments;
     private User currentUser;
     private Context context;
 
@@ -34,6 +36,7 @@ public class MainPresenter implements Presenter
     {
         this.mView = mView;
         context= (Context) mView;
+        fragments=new Fragment[]{new ViewPagerFragment(),new ActiveFragment()};
     }
     
     @Override
@@ -43,12 +46,12 @@ public class MainPresenter implements Presenter
         loadUserInfo();
         if(savedInstanceState==null)
         {
-            if(viewpagerFragment==null)
+            if(fragments[0]==null)
             {
-                viewpagerFragment=new ViewPagerFragment();
+                fragments[0]=new ViewPagerFragment();
             }
-            mView.getSupportFragmentManager().beginTransaction().replace(R.id.container,viewpagerFragment).commit();
-            
+            mView.getSupportFragmentManager().beginTransaction().replace(R.id.container,fragments[0]).commit();
+            mView.setTitle(context.getResources().getString(R.string.app_name));
         }
 
     }
@@ -98,8 +101,8 @@ public class MainPresenter implements Presenter
         {
             User newUser=new User();
             newUser.setLastSign(time);
-            newUser.setCoint(currentUser.getCoint()+2);
-            newUser.update(context,currentUser.getObjectId(), new UpdateListener()
+            newUser.setCoint(currentUser.getCoint() + 2);
+            newUser.update(context, currentUser.getObjectId(), new UpdateListener()
             {
                 @Override
                 public void onSuccess()
@@ -144,4 +147,25 @@ public class MainPresenter implements Presenter
     }
 
 
+    public void onActiveItemClick()
+    {
+        if(fragments[1]==null)
+        {
+            fragments[1]=new ActiveFragment();
+        }
+        mView.getSupportFragmentManager().beginTransaction().replace(R.id.container,fragments[1]).commit();
+        mView.setTitle("活动预告");
+        mView.closeDrawer();
+    }
+
+    public void onHoneIttemClick()
+    {
+        if(fragments[0]==null)
+        {
+            fragments[0]=new ViewPagerFragment();
+        }
+        mView.getSupportFragmentManager().beginTransaction().replace(R.id.container,fragments[0]).commit();
+        mView.setTitle(context.getResources().getString(R.string.app_name));
+        mView.closeDrawer();
+    }
 }

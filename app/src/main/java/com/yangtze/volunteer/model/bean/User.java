@@ -40,7 +40,7 @@ public class User extends BmobUser
         return img;
     }
 
-    public int getCoint()
+    public Integer getCoint()
     {
         return coint;
     }

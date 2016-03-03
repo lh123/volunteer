@@ -10,5 +10,7 @@ public interface MainView
     public void setUserName(String name);
     public void setSignState(boolean state);
     public void showToast(String msg);
+    public void closeDrawer();
+    public void setTitle(String title);
     
 }

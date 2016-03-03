@@ -170,6 +170,6 @@ public class UserDetailActivity extends AppCompatActivity
         }
         userName.setText(user.getUsername());
         userXuehao.setText(user.getXuehao());
-        userCoint.setText(user.getCoint() + "分");
+        userCoint.setText(user.getCoint()==null?"0":user.getCoint() + "分");
     }
 }

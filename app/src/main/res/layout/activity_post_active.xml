@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:singleLine="true"
+                android:hint="标题"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ed_title"
+                android:layout_alignParentTop="true"
+                android:layout_margin="10dp"/>
+
+            <EditText
+                android:hint="简介"
+                android:layout_width="match_parent"
+                android:layout_height="310dp"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
+                android:gravity="top"
+                android:ems="10"
+                android:id="@+id/ed_des"
+                android:layout_below="@+id/ed_title"
+                android:layout_margin="10dp"/>
+
+            <EditText
+                android:hint="人数"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/ed_num"
+                android:layout_below="@+id/ed_des"
+                android:layout_alignLeft="@+id/ed_des"
+                android:layout_alignStart="@+id/ed_des"/>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="日期"
+                android:id="@+id/btn_time"
+                android:layout_alignBottom="@+id/ed_num"
+                android:layout_alignRight="@+id/ed_des"
+                android:layout_alignEnd="@+id/ed_des"/>
+
+        </RelativeLayout>
+    </ScrollView>
+    <Button
+        android:text="发布"
+        android:background="@drawable/btn_login_selector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_post"
+        android:layout_margin="10dp"/>
+</LinearLayout>

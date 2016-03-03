@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.widget.DrawerLayout;
 import com.yangtze.volunteer.utils.ToolbarUtils;
 import android.support.design.widget.NavigationView;
+import android.view.MenuItem;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -72,6 +73,23 @@ public class MainActivity extends AppCompatActivity implements MainView
                 presenter.onUserSignClick();
             }
         });
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener()
+        {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item)
+            {
+                switch (item.getItemId())
+                {
+                    case R.id.active_predict:
+                        presenter.onActiveItemClick();
+                        return true;
+                    case R.id.home:
+                        presenter.onHoneIttemClick();
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -111,5 +129,18 @@ public class MainActivity extends AppCompatActivity implements MainView
     {
         Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
     }
-    
+
+    @Override
+    public void closeDrawer()
+    {
+        drawerLayout.closeDrawers();
+    }
+
+    @Override
+    public void setTitle(String title)
+    {
+        toolbar.setTitle(title);
+    }
+
+
 }
