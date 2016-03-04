@@ -36,9 +36,6 @@
             android:name=".ui.RegisterActivity"
             android:label="注册"/>
         <activity
-            android:name=".ui.WebViewActivity"
-            android:label="内容详情"/>
-        <activity
             android:name=".ui.NewsDetailActivity"
             android:label="内容详情"/>
         <activity

@@ -11,13 +11,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.yangtze.volunteer.R;
 import com.yangtze.volunteer.model.bean.NewsItem;
+import com.yangtze.volunteer.ui.NewsDetailActivity;
+
 import java.util.ArrayList;
 import android.view.View.OnClickListener;
 import android.content.Intent;
-import com.yangtze.volunteer.ui.WebViewActivity;
 
 import static com.yangtze.volunteer.R.id.news_img;
-import com.yangtze.volunteer.ui.NewsDetailActivity;
 
 public class NewsRecyclerViewAdapter extends RecyclerView.Adapter
 {
