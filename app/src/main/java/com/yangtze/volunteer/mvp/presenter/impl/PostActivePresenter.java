@@ -37,6 +37,10 @@ public class PostActivePresenter implements Presenter
 
     public void postActive()
     {
+        if(BmobUser.getCurrentUser(context,User.class)==null)
+        {
+            mView.showToast("未登录");
+        }
         if(checkInf())
         {
             VolunteerActive active = new VolunteerActive();
@@ -69,7 +73,7 @@ public class PostActivePresenter implements Presenter
         if(mView.getActiveTitle()==null||mView.getActiveDes()==null||mView.getActiveNum()==null||
                 mView.getActiveTime()==null)
         {
-            mView.showToast("标题不能为空！");
+            mView.showToast("信息不完整");
             flag = false;
         }
         else

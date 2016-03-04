@@ -102,7 +102,7 @@ public class MainPresenter implements Presenter
         {
             User newUser=new User();
             newUser.setLastSign(time);
-            newUser.setCoint(currentUser.getCoint()==null?0:currentUser.getCoint() + 2);
+            newUser.setCoint((currentUser.getCoint()==null?0:currentUser.getCoint()) + 2);
             newUser.update(context, currentUser.getObjectId(), new UpdateListener()
             {
                 @Override

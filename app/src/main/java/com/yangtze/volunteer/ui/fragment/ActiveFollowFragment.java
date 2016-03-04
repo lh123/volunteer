@@ -21,6 +21,7 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.BmobUser;
 
 /**
  * Created by liuhui on 2016/3/3.
@@ -30,6 +31,17 @@ public class ActiveFollowFragment extends Fragment
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private ActiveFollowRecyclerViewAdapter adapter;
+    private boolean canExit=false;
+
+    public void setCanExit(boolean canExit)
+    {
+        this.canExit = canExit;
+    }
+
+    public boolean isCanExit()
+    {
+        return canExit;
+    }
 
     @Nullable
     @Override
@@ -49,7 +61,7 @@ public class ActiveFollowFragment extends Fragment
         refreshData();
     }
 
-    private void refreshData()
+    public void refreshData()
     {
         BmobQuery<User> query=new BmobQuery<>();
         final VolunteerActive active = ((ActiveDetailActivity) getActivity()).getActive();
@@ -59,9 +71,27 @@ public class ActiveFollowFragment extends Fragment
             @Override
             public void onSuccess(List<User> list)
             {
+                canExit=false;
                 adapter.setList(list);
                 adapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
+                for(User u:list)
+                {
+                    if(u.getObjectId().equals(BmobUser.getCurrentUser(getContext()).getObjectId()))
+                    {
+                        canExit=true;
+                        break;
+                    }
+                }
+                if(canExit)
+                {
+                    ((ActiveDetailActivity)getActivity()).setBtnText("退出");
+                }
+                else
+                {
+                    ((ActiveDetailActivity)getActivity()).setBtnText("加入");
+                }
+                ((ActiveDetailActivity)getActivity()).hidePb();
             }
 
             @Override

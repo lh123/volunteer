@@ -17,6 +17,7 @@ import android.content.Intent;
 import com.yangtze.volunteer.ui.WebViewActivity;
 
 import static com.yangtze.volunteer.R.id.news_img;
+import com.yangtze.volunteer.ui.NewsDetailActivity;
 
 public class NewsRecyclerViewAdapter extends RecyclerView.Adapter
 {
@@ -82,8 +83,8 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter
                     public void onClick(View p1)
                     {
                         Intent i=new Intent();
-                        i.setClass(context,WebViewActivity.class);
-                        i.putExtra("url",list.get(getAdapterPosition()).getUrl());
+                        i.setClass(context,NewsDetailActivity.class);
+                        i.putExtra("data",list.get(getAdapterPosition()).getUrl());
                         context.startActivity(i);
                     }
                 });
