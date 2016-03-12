@@ -1,44 +1,46 @@
 package com.yangtze.volunteer.ui;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
+import android.widget.PopupWindow;
+import android.widget.ProgressBar;
+import com.bumptech.glide.Glide;
 import com.yangtze.volunteer.App;
 import com.yangtze.volunteer.R;
-
-import android.util.DisplayMetrics;
-import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.support.v7.widget.Toolbar;
-import android.widget.ProgressBar;
-
 import com.yangtze.volunteer.utils.ToolbarUtils;
-
+import java.io.IOException;
+import java.net.URL;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import java.io.IOException;
-import java.net.URL;
+import uk.co.senab.photoview.PhotoView;
 
 public class NewsDetailActivity extends AppCompatActivity
 {
     private WebView webView;
     private ProgressBar progressBar;
-    private int width;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_ACTION_MODE_OVERLAY);
         setContentView(R.layout.activity_news_detail);
         initToolbar();
         webView = (WebView) findViewById(R.id.webview);
         progressBar= (ProgressBar) findViewById(R.id.progressbar);
         String url=getIntent().getStringExtra("data");
-        DisplayMetrics dm=new DisplayMetrics();
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.addJavascriptInterface(new ImgClick(),"Android");
         initData(url);
     }
 
@@ -70,6 +72,7 @@ public class NewsDetailActivity extends AppCompatActivity
                 for(Element e:imgs)
                 {
                     e.attr("width","100%");
+                    e.attr("onclick","Android.imgClick(this.src)");
                     e.removeAttr("height");
                 }
                 final String content=dd.html().replaceAll("../../../", "http://zgzyz.cyol.com/");
@@ -98,5 +101,24 @@ public class NewsDetailActivity extends AppCompatActivity
                 finish();
             }
         });
+    }
+    
+    class ImgClick
+    {
+        @JavascriptInterface
+        public void imgClick(String path)
+        {
+            showPopupWindows(path);
+        }
+    }
+    
+    public void showPopupWindows(String url)
+    {
+        View v=LayoutInflater.from(this).inflate(R.layout.pop_photoview,null);
+        PopupWindow pop=new PopupWindow(v,ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT,true);
+        pop.setBackgroundDrawable(new BitmapDrawable());
+        PhotoView pv=(PhotoView) v.findViewById(R.id.iv_photo);
+        Glide.with(this).load(url).into(pv);
+        pop.showAtLocation(webView,Gravity.TOP,0,0);
     }
 }
