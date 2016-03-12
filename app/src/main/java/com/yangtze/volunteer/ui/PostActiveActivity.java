@@ -17,6 +17,7 @@ import com.yangtze.volunteer.mvp.views.PostActiveView;
 import com.yangtze.volunteer.utils.ToolbarUtils;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by liuhui on 2016/3/3.
@@ -33,6 +34,7 @@ public class PostActiveActivity extends AppCompatActivity implements PostActiveV
     private Toolbar toolbar;
 
     private String time;
+    private Long lTime;
     private ProgressDialog pd;
 
     @Override
@@ -112,6 +114,12 @@ public class PostActiveActivity extends AppCompatActivity implements PostActiveV
     }
 
     @Override
+    public Long getTime()
+    {
+        return lTime;
+    }
+
+    @Override
     public void showTimeDialog()
     {
         Calendar ca=Calendar.getInstance();
@@ -121,7 +129,10 @@ public class PostActiveActivity extends AppCompatActivity implements PostActiveV
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
             {
-                time=year+"年"+monthOfYear+"月"+dayOfMonth+"日";
+                time=year+"年"+(monthOfYear+1)+"月"+dayOfMonth+"日";
+                Calendar c=Calendar.getInstance();
+                c.set(year,monthOfYear,dayOfMonth);
+                lTime=c.getTimeInMillis();
             }
         },ca.get(Calendar.YEAR),ca.get(Calendar.MONTH),ca.get(Calendar.DAY_OF_MONTH));
         dp.setCancelable(false);

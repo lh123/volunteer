@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
@@ -13,10 +14,12 @@ import com.yangtze.volunteer.domain.event.UserEvent;
 import com.yangtze.volunteer.model.bean.User;
 import com.yangtze.volunteer.mvp.presenter.Presenter;
 import com.yangtze.volunteer.mvp.views.MainView;
+import com.yangtze.volunteer.ui.IntroduceViewActivity;
 import com.yangtze.volunteer.ui.LoginActivity;
 import com.yangtze.volunteer.ui.UserDetailActivity;
 import com.yangtze.volunteer.ui.fragment.ActiveFragment;
 import com.yangtze.volunteer.ui.fragment.JointedFragment;
+import com.yangtze.volunteer.ui.fragment.RankFragment;
 import com.yangtze.volunteer.ui.fragment.ViewPagerFragment;
 
 import java.text.SimpleDateFormat;
@@ -37,7 +40,7 @@ public class MainPresenter implements Presenter
     {
         this.mView = mView;
         context= (Context) mView;
-        fragments=new Fragment[]{new ViewPagerFragment(),new ActiveFragment(),new JointedFragment()};
+        fragments=new Fragment[]{new ViewPagerFragment(),new ActiveFragment(),new JointedFragment(),new RankFragment()};
     }
     
     @Override
@@ -45,13 +48,19 @@ public class MainPresenter implements Presenter
     {
         BusProvide.getBus().register(this);
         loadUserInfo();
+        FragmentTransaction transaction= mView.getSupportFragmentManager().beginTransaction();
         if(savedInstanceState==null)
         {
             if(fragments[0]==null)
             {
                 fragments[0]=new ViewPagerFragment();
             }
-            mView.getSupportFragmentManager().beginTransaction().replace(R.id.container,fragments[0]).commit();
+            hideAll(transaction,fragments[0]);
+            if(!fragments[0].isAdded())
+            {
+                transaction.add(R.id.container, fragments[0]);
+            }
+            transaction.show(fragments[0]).commit();
             mView.setTitle(context.getResources().getString(R.string.app_name));
         }
 
@@ -102,7 +111,7 @@ public class MainPresenter implements Presenter
         {
             User newUser=new User();
             newUser.setLastSign(time);
-            newUser.setCoint((currentUser.getCoint()==null?0:currentUser.getCoint()) + 2);
+            newUser.setCoint((currentUser.getCoint() == null ? 0 : currentUser.getCoint()) + 2);
             newUser.update(context, currentUser.getObjectId(), new UpdateListener()
             {
                 @Override
@@ -150,33 +159,87 @@ public class MainPresenter implements Presenter
 
     public void onActiveItemClick()
     {
+        FragmentTransaction transaction= mView.getSupportFragmentManager().beginTransaction();
         if(fragments[1]==null)
         {
             fragments[1]=new ActiveFragment();
         }
-        mView.getSupportFragmentManager().beginTransaction().replace(R.id.container,fragments[1]).commit();
+        hideAll(transaction,fragments[1]);
+        if(!fragments[1].isAdded())
+        {
+            transaction.add(R.id.container,fragments[1]);
+        }
+        transaction.show(fragments[1]).commit();
         mView.setTitle("活动预告");
         mView.closeDrawer();
     }
 
-    public void onHoneIttemClick()
+    public void onHomeItemClick()
     {
+        FragmentTransaction transaction= mView.getSupportFragmentManager().beginTransaction();
         if(fragments[0]==null)
         {
             fragments[0]=new ViewPagerFragment();
         }
-        mView.getSupportFragmentManager().beginTransaction().replace(R.id.container,fragments[0]).commit();
+        hideAll(transaction,fragments[0]);
+        if(!fragments[0].isAdded())
+        {
+           transaction.add(R.id.container, fragments[0]);
+        }
+        transaction.show(fragments[0]).commit();
         mView.setTitle(context.getResources().getString(R.string.app_name));
         mView.closeDrawer();
     }
-    public void onJoinedIttemClick()
+
+    public void onJoinedItemClick()
     {
+        FragmentTransaction transaction= mView.getSupportFragmentManager().beginTransaction();
         if(fragments[2]==null)
         {
             fragments[2]=new JointedFragment();
         }
-        mView.getSupportFragmentManager().beginTransaction().replace(R.id.container,fragments[2]).commit();
+        hideAll(transaction,fragments[2]);
+        if(!fragments[2].isAdded())
+        {
+             transaction.add(R.id.container, fragments[2]);
+        }
+        transaction.show(fragments[2]).commit();
         mView.setTitle(context.getResources().getString(R.string.app_name));
         mView.closeDrawer();
+    }
+
+    public void onRankItemClick()
+    {
+        FragmentTransaction transaction= mView.getSupportFragmentManager().beginTransaction();
+        if(fragments[3]==null)
+        {
+            fragments[3]=new RankFragment();
+        }
+        hideAll(transaction,fragments[3]);
+        if(!fragments[3].isAdded())
+        {
+            transaction.add(R.id.container, fragments[3]);
+        }
+        transaction.show(fragments[3]).commit();
+        mView.setTitle(context.getResources().getString(R.string.app_name));
+        mView.closeDrawer();
+    }
+
+    public void onIntroduceItemClick()
+    {
+        Intent i=new Intent();
+        i.setClass(context, IntroduceViewActivity.class);
+        context.startActivity(i);
+    }
+
+    private void hideAll(FragmentTransaction transaction,Fragment fragment)
+    {
+        for(Fragment f:fragments)
+        {
+            if(f.isAdded()&&!f.equals(fragment))
+            {
+                transaction.hide(f);
+            }
+        }
     }
 }

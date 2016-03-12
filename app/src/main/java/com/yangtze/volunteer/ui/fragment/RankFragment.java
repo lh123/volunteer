@@ -13,23 +13,22 @@ import android.widget.Toast;
 
 import com.yangtze.volunteer.R;
 import com.yangtze.volunteer.model.bean.User;
-import com.yangtze.volunteer.model.bean.VolunteerActive;
 import com.yangtze.volunteer.ui.adapter.ActiveRecyclerViewAdapter;
+import com.yangtze.volunteer.ui.adapter.RankRecyclerViewAdapter;
 
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.FindListener;
 
 /**
- * Created by liuhui on 2016/3/3.
+ * Created by liuhui on 2016/3/12.
  */
-public class JointedFragment extends Fragment
+public class RankFragment extends Fragment
 {
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
-    private ActiveRecyclerViewAdapter adapter;
+    private RankRecyclerViewAdapter adapter;
 
     @Nullable
     @Override
@@ -51,20 +50,13 @@ public class JointedFragment extends Fragment
 
     private void refreshData()
     {
-        User user= BmobUser.getCurrentUser(getContext(),User.class);
-        if(user==null)
-        {
-            Toast.makeText(getContext(),"未登录",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        BmobQuery<VolunteerActive> query=new BmobQuery<>();
-        BmobQuery<User> innerQuery=new BmobQuery<>();
-        innerQuery.addWhereEqualTo("objectId",user.getObjectId());
-        query.addWhereMatchesQuery("attendee","_User",innerQuery);
-        query.findObjects(getContext(), new FindListener<VolunteerActive>()
+        BmobQuery<User> query =new BmobQuery<>();
+        query.setLimit(50);
+        query.order("-coint");
+        query.findObjects(getContext(), new FindListener<User>()
         {
             @Override
-            public void onSuccess(List<VolunteerActive> list)
+            public void onSuccess(List<User> list)
             {
                 adapter.setList(list);
                 adapter.notifyDataSetChanged();
@@ -74,18 +66,17 @@ public class JointedFragment extends Fragment
             @Override
             public void onError(int i, String s)
             {
+                Toast.makeText(getContext(),"加载失败",Toast.LENGTH_SHORT).show();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
 
-
-
     private void initRecyclerView()
     {
         LinearLayoutManager lm=new LinearLayoutManager(getContext());
         lm.setOrientation(LinearLayoutManager.VERTICAL);
-        adapter=new ActiveRecyclerViewAdapter();
+        adapter=new RankRecyclerViewAdapter();
         recyclerView.setLayoutManager(lm);
         recyclerView.setAdapter(adapter);
         swipeRefreshLayout.post(new Runnable()

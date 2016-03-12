@@ -114,11 +114,6 @@ public class NewsDetailActivity extends AppCompatActivity
     
     public void showPopupWindows(String url)
     {
-        View v=LayoutInflater.from(this).inflate(R.layout.pop_photoview,null);
-        PopupWindow pop=new PopupWindow(v,ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT,true);
-        pop.setBackgroundDrawable(new BitmapDrawable());
-        PhotoView pv=(PhotoView) v.findViewById(R.id.iv_photo);
-        Glide.with(this).load(url).into(pv);
-        pop.showAtLocation(webView,Gravity.TOP,0,0);
+        // TODO: 2016/3/12  
     }
 }

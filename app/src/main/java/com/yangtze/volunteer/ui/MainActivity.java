@@ -1,5 +1,7 @@
 package com.yangtze.volunteer.ui;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -85,10 +87,16 @@ public class MainActivity extends AppCompatActivity implements MainView
                         presenter.onActiveItemClick();
                         return true;
                     case R.id.home:
-                        presenter.onHoneIttemClick();
+                        presenter.onHomeItemClick();
                         return true;
                     case R.id.jointed:
-                        presenter.onJoinedIttemClick();
+                        presenter.onJoinedItemClick();
+                        return true;
+                    case R.id.introduce:
+                        presenter.onIntroduceItemClick();
+                        return true;
+                    case R.id.rank:
+                        presenter.onRankItemClick();
                         return true;
                 }
                 return false;
@@ -154,5 +162,30 @@ public class MainActivity extends AppCompatActivity implements MainView
         toolbar.setTitle(title);
     }
 
-
+    @Override
+    public void onBackPressed()
+    {
+        final AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("确认退出?");
+        builder.setPositiveButton("退出", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                MainActivity.super.onBackPressed();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 }

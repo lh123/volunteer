@@ -11,6 +11,7 @@ public class VolunteerActive extends BmobObject
     private User author;
     private String title;
     private String startTime;
+    private Long time;
     private Integer status;
     private BmobRelation attendee;
     private String desc;
@@ -84,5 +85,15 @@ public class VolunteerActive extends BmobObject
     public void setMaxNumber(Integer maxNumber)
     {
         this.maxNumber = maxNumber;
+    }
+
+    public Long getTime()
+    {
+        return time;
+    }
+
+    public void setTime(Long time)
+    {
+        this.time = time;
     }
 }

@@ -113,6 +113,12 @@ public class ActiveDetailActivity extends AppCompatActivity
 
     private void setBtnState()
     {
+        if(System.currentTimeMillis()>active.getTime())
+        {
+            btnJoin.setVisibility(View.INVISIBLE);
+            btnJoin.setClickable(false);
+            return;
+        }
         if (BmobUser.getCurrentUser(ActiveDetailActivity.this, User.class) == null)
         {
             return;

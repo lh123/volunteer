@@ -59,7 +59,7 @@ public class NewsModel
             {
                 imgUrl=img.get(0).attr("src");
                 imgUrl=imgUrl.replace("../../../","http://zgzyz.cyol.com/");
-                Log.e("img",imgUrl);
+                Log.i("img",imgUrl);
             }
         }
         catch (MalformedURLException e)

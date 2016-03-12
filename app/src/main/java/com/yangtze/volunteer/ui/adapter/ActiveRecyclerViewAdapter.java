@@ -33,6 +33,7 @@ public class ActiveRecyclerViewAdapter extends RecyclerView.Adapter
         ActiveHolder h= (ActiveHolder) holder;
         VolunteerActive active = list.get(position);
         h.activeTitle.setText(active.getTitle());
+        h.activeState.setText(active.getTime()>System.currentTimeMillis()?"报名中":"已结束");
         h.activeNum.setText(active.getMaxNumber()+"人");
         h.activeTime.setText(active.getStartTime());
     }

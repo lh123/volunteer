@@ -2,6 +2,7 @@ package com.yangtze.volunteer.mvp.presenter.impl;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.yangtze.volunteer.model.bean.User;
 import com.yangtze.volunteer.model.bean.VolunteerActive;
@@ -44,6 +45,7 @@ public class PostActivePresenter implements Presenter
         if(checkInf())
         {
             VolunteerActive active = new VolunteerActive();
+            active.setTime(mView.getTime());
             active.setTitle(mView.getActiveTitle());
             active.setDesc(mView.getActiveDes());
             active.setAuthor(BmobUser.getCurrentUser(context, User.class));
@@ -56,6 +58,7 @@ public class PostActivePresenter implements Presenter
                 public void onSuccess()
                 {
                     mView.dismissProgressDialog();
+                    ((AppCompatActivity)mView).finish();
                 }
 
                 @Override

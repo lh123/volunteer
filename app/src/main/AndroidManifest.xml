@@ -47,6 +47,14 @@
         <activity
             android:name=".ui.ActiveDetailActivity"
             android:label="活动详情"/>
+        <activity
+            android:name=".ui.IntroduceViewActivity"
+            android:label="精品介绍"/>
+        <activity
+            android:name=".crash.CrashActivity"
+            android:label="程序崩溃了"
+            android:excludeFromRecents="true"
+            android:theme="@style/DialogBlue" />
     </application>
 
 </manifest>
