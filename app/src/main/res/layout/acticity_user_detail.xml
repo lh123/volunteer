@@ -8,7 +8,7 @@
     <include layout="@layout/toolbar"/>
 
     <RelativeLayout
-        android:background="@color/blue"
+        android:background="@color/red"
         android:layout_width="match_parent"
         android:layout_height="150dp">
 
@@ -97,7 +97,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:background="@drawable/btn_login_selector"
+        android:background="@drawable/btn_background_selector"
         android:gravity="center"
         android:text="注销"
         android:textColor="@color/white"

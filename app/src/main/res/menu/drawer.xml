@@ -9,18 +9,35 @@
         android:icon="@drawable/ic_active_predict"
         android:id="@+id/active_predict"
         android:title="活动预告"/>
-    
+
+    <item
+        android:id="@+id/introduce"
+        android:title="精品介绍"/>
+
+
+    <item
+        android:id="@+id/luntan"
+        android:title="公益圈"/>
+
+    <item
+        android:title="公益排名"
+        android:id="@+id/rank"/>
+
     <item
         android:icon="@drawable/ic_joined"
         android:id="@+id/jointed"
-        android:title="我参加我活动"/>
+        android:title="我的足迹"/>
 
     <item
-        android:title="排名"
-        android:id="@+id/rank"/>
-    
-    <item 
-        android:id="@+id/introduce"
-        android:title="精品介绍"/>
+        android:title="小编提醒"
+        android:id="@+id/attention"/>
+
+    <item
+        android:title="意见反馈"
+        android:id="@+id/feedback"/>
+
+    <item
+        android:title="软件介绍"
+        android:id="@+id/software_introduce"/>
     
 </menu>

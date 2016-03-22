@@ -3,7 +3,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="200dp"
-    android:background="?attr/colorPrimaryDark">
+    android:background="@drawable/ic_zhuye">
 
 	<de.hdodenhof.circleimageview.CircleImageView
 		android:layout_height="100dp"
@@ -30,15 +30,26 @@
 		android:layout_alignEnd="@+id/user_img"/>
 
 	<ImageView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+		android:layout_width="50dp"
+		android:layout_height="50dp"
 		android:id="@+id/user_sign"
 		android:src="@drawable/ic_sign"
+		android:layout_alignTop="@+id/imageView"
+		android:layout_toLeftOf="@+id/imageView"
+		android:layout_marginRight="13dp"
+		android:layout_marginEnd="13dp"
+		android:layout_alignBottom="@+id/imageView"/>
+
+	<ImageView
+		android:layout_width="30dp"
+		android:layout_height="30dp"
+		android:src="@drawable/ic_qiandao"
+		android:id="@+id/imageView"
+		android:layout_marginRight="10dp"
+		android:layout_marginEnd="10dp"
 		android:layout_alignTop="@+id/user_name"
 		android:layout_alignParentRight="true"
-		android:layout_alignParentEnd="true"
-		android:layout_marginRight="31dp"
-		android:layout_marginEnd="31dp"/>
+		android:layout_alignParentEnd="true"/>
 
 
 </RelativeLayout>

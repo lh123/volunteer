@@ -61,7 +61,7 @@
     </ScrollView>
     <Button
         android:text="发布"
-        android:background="@drawable/btn_login_selector"
+        android:background="@drawable/btn_background_selector"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btn_post"

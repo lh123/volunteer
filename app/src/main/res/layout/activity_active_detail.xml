@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:background="@color/blue">
+        android:background="@color/red">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_img"
@@ -57,9 +57,11 @@
             android:id="@+id/btn_join"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:layout_alignBottom="@+id/user_img"
             android:layout_toEndOf="@+id/active_title_hint"
             android:layout_toRightOf="@+id/active_title_hint"
+            android:background="@drawable/btn_background_selector"
             android:text="加入"/>
 
     </RelativeLayout>
