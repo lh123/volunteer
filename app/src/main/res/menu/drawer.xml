@@ -12,15 +12,18 @@
 
     <item
         android:id="@+id/introduce"
+        android:icon="@drawable/ic_jp"
         android:title="精品介绍"/>
 
 
     <item
         android:id="@+id/luntan"
+        android:icon="@drawable/ic_luntan"
         android:title="公益圈"/>
 
     <item
         android:title="公益排名"
+        android:icon="@drawable/ic_rank"
         android:id="@+id/rank"/>
 
     <item
@@ -30,14 +33,17 @@
 
     <item
         android:title="小编提醒"
+        android:icon="@drawable/ic_attention"
         android:id="@+id/attention"/>
 
     <item
         android:title="意见反馈"
+        android:icon="@drawable/ic_feedback"
         android:id="@+id/feedback"/>
 
     <item
         android:title="软件介绍"
+        android:icon="@drawable/ic_introduce"
         android:id="@+id/software_introduce"/>
     
 </menu>
