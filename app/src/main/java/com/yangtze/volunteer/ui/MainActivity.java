@@ -23,6 +23,7 @@ import com.yangtze.volunteer.mvp.presenter.impl.MainPresenter;
 import com.yangtze.volunteer.mvp.views.MainView;
 import com.yangtze.volunteer.utils.ToolbarUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 
 public class MainActivity extends AppCompatActivity implements MainView
 {
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements MainView
     private ImageView userSign;
 
 
-    private PrimaryDrawerItem[] items;
+    private IDrawerItem[] items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -61,15 +62,17 @@ public class MainActivity extends AppCompatActivity implements MainView
         db.withToolbar(toolbar);
         db.withHeader(R.layout.navigation_header);
         db.withHeaderDivider(true);
+        db.withStickyFooterDivider(true);
         db.withSliderBackgroundColorRes(R.color.gray_light);
         db.withTranslucentStatusBar(true);
-        items = new PrimaryDrawerItem[]{new PrimaryDrawerItem().withName(R.string.home).withIcon(R.drawable.ic_home).withIconTinted(true),
+        items = new IDrawerItem[]{new PrimaryDrawerItem().withName(R.string.home).withIcon(R.drawable.ic_home).withIconTinted(true),
             new PrimaryDrawerItem().withName(R.string.active_predict).withIcon(R.drawable.ic_active_predict).withIconTinted(true),
             new PrimaryDrawerItem().withName(R.string.introduce).withIcon(R.drawable.ic_jp).withIconTinted(true),
             new PrimaryDrawerItem().withName(R.string.luntan).withIcon(R.drawable.ic_luntan).withIconTinted(true),
             new PrimaryDrawerItem().withName(R.string.rank).withIcon(R.drawable.ic_rank).withIconTinted(true),
             new PrimaryDrawerItem().withName(R.string.jointed).withIcon(R.drawable.ic_joined).withIconTinted(true),
             new PrimaryDrawerItem().withName(R.string.attention).withIcon(R.drawable.ic_attention).withIconTinted(true),
+            new DividerDrawerItem(),
             new PrimaryDrawerItem().withName(R.string.feedback).withIcon(R.drawable.ic_feedback).withIconTinted(true),
             new PrimaryDrawerItem().withName(R.string.software_introduce).withIcon(R.drawable.ic_introduce).withIconTinted(true)};
         db.addDrawerItems(items);
