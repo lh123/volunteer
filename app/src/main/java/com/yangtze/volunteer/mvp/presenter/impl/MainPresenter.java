@@ -167,7 +167,7 @@ public class MainPresenter implements Presenter
         hideAll(transaction,fragments[1]);
         if(!fragments[1].isAdded())
         {
-            transaction.add(R.id.container,fragments[1]);
+            transaction.add(R.id.container,fragments[1]).addToBackStack(null);
         }
         transaction.show(fragments[1]).commit();
         mView.setTitle("活动预告");
@@ -184,7 +184,7 @@ public class MainPresenter implements Presenter
         hideAll(transaction,fragments[0]);
         if(!fragments[0].isAdded())
         {
-           transaction.add(R.id.container, fragments[0]);
+           transaction.add(R.id.container, fragments[0]).addToBackStack(null);
         }
         transaction.show(fragments[0]).commit();
         mView.setTitle(context.getResources().getString(R.string.app_name));
@@ -201,7 +201,7 @@ public class MainPresenter implements Presenter
         hideAll(transaction,fragments[2]);
         if(!fragments[2].isAdded())
         {
-             transaction.add(R.id.container, fragments[2]);
+             transaction.add(R.id.container, fragments[2]).addToBackStack(null);
         }
         transaction.show(fragments[2]).commit();
         mView.setTitle(context.getResources().getString(R.string.app_name));
@@ -218,7 +218,7 @@ public class MainPresenter implements Presenter
         hideAll(transaction,fragments[3]);
         if(!fragments[3].isAdded())
         {
-            transaction.add(R.id.container, fragments[3]);
+            transaction.add(R.id.container, fragments[3]).addToBackStack(null);
         }
         transaction.show(fragments[3]).commit();
         mView.setTitle(context.getResources().getString(R.string.app_name));

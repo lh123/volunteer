@@ -50,6 +50,14 @@ public class RankFragment extends Fragment
 
     private void refreshData()
     {
+        swipeRefreshLayout.post(new Runnable(){
+
+                @Override
+                public void run()
+                {
+                    swipeRefreshLayout.setRefreshing(true);
+                }
+            });
         BmobQuery<User> query =new BmobQuery<>();
         query.setLimit(50);
         query.order("-coint");

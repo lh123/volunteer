@@ -1,107 +1,139 @@
 package com.yangtze.volunteer.ui;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-
-import com.bumptech.glide.Glide;
-import com.yangtze.volunteer.R;
-import com.yangtze.volunteer.mvp.views.MainView;
 import android.support.v7.widget.Toolbar;
-import android.support.v4.widget.DrawerLayout;
-import com.yangtze.volunteer.utils.ToolbarUtils;
-import android.support.design.widget.NavigationView;
 import android.view.MenuItem;
-import android.view.View.OnClickListener;
 import android.view.View;
-import android.support.v7.app.ActionBarDrawerToggle;
-import com.yangtze.volunteer.mvp.presenter.impl.MainPresenter;
-
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.bumptech.glide.Glide;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.yangtze.volunteer.R;
+import com.yangtze.volunteer.mvp.presenter.impl.MainPresenter;
+import com.yangtze.volunteer.mvp.views.MainView;
+import com.yangtze.volunteer.utils.ToolbarUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements MainView
 {
-    private DrawerLayout drawerLayout;
+    private Drawer drawerLayout;
     private Toolbar toolbar;
-    private NavigationView navigationView;
     private MainPresenter presenter;
     private CircleImageView circleImageView;
     private TextView userName;
     private ImageView userSign;
-    
+
+
+    private PrimaryDrawerItem[] items;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        drawerLayout=(DrawerLayout) findViewById(R.id.drawerlayout);
-        toolbar=(Toolbar) findViewById(R.id.toolbar);
-        navigationView=(NavigationView) findViewById(R.id.navigation_view);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         initToolbar();
         initDrawer();
-        presenter=new MainPresenter(this);
+        presenter = new MainPresenter(this);
         presenter.onCreate(savedInstanceState);
     }
 
     private void initToolbar()
     {
-        ToolbarUtils.initToolbar(toolbar,this);
-        ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
+        ToolbarUtils.initToolbar(toolbar, this);
     }
 
     private void initDrawer()
     {
-        circleImageView= (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.user_img);
-        userName= (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_name);
-        userSign= (ImageView) navigationView.getHeaderView(0).findViewById(R.id.user_sign);
-        circleImageView.setOnClickListener(new OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                presenter.onUserImgClick();
-            }
-        });
-        userSign.setOnClickListener(new OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                presenter.onUserSignClick();
-            }
-        });
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener()
-        {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item)
-            {
-                switch (item.getItemId())
+        DrawerBuilder db=new DrawerBuilder();
+        db.withActivity(this);
+        db.withActionBarDrawerToggle(true);
+        db.withToolbar(toolbar);
+        db.withHeader(R.layout.navigation_header);
+        db.withHeaderDivider(true);
+        db.withSliderBackgroundColorRes(R.color.gray_light);
+        db.withTranslucentStatusBar(true);
+        items = new PrimaryDrawerItem[]{new PrimaryDrawerItem().withName(R.string.home).withIcon(R.drawable.ic_home).withIconTinted(true),
+            new PrimaryDrawerItem().withName(R.string.active_predict).withIcon(R.drawable.ic_active_predict).withIconTinted(true),
+            new PrimaryDrawerItem().withName(R.string.introduce).withIcon(R.drawable.ic_jp).withIconTinted(true),
+            new PrimaryDrawerItem().withName(R.string.luntan).withIcon(R.drawable.ic_luntan).withIconTinted(true),
+            new PrimaryDrawerItem().withName(R.string.rank).withIcon(R.drawable.ic_rank).withIconTinted(true),
+            new PrimaryDrawerItem().withName(R.string.jointed).withIcon(R.drawable.ic_joined).withIconTinted(true),
+            new PrimaryDrawerItem().withName(R.string.attention).withIcon(R.drawable.ic_attention).withIconTinted(true),
+            new PrimaryDrawerItem().withName(R.string.feedback).withIcon(R.drawable.ic_feedback).withIconTinted(true),
+            new PrimaryDrawerItem().withName(R.string.software_introduce).withIcon(R.drawable.ic_introduce).withIconTinted(true)};
+        db.addDrawerItems(items);
+        db.withStickyFooter(R.layout.navigation_foot);
+        db.withStickyFooterShadow(false);
+        drawerLayout = db.build();
+        drawerLayout.setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
+
+                @Override
+                public boolean onItemClick(View p1, int p2, IDrawerItem p3)
                 {
-                    case R.id.active_predict:
-                        presenter.onActiveItemClick();
-                        return true;
-                    case R.id.home:
-                        presenter.onHomeItemClick();
-                        return true;
-                    case R.id.jointed:
-                        presenter.onJoinedItemClick();
-                        return true;
-                    case R.id.introduce:
-                        presenter.onIntroduceItemClick();
-                        return true;
-                    case R.id.rank:
-                        presenter.onRankItemClick();
-                        return true;
+                    switch (p2)
+                    {
+                        case 1:
+                            presenter.onHomeItemClick();
+                            break;
+                        case 2:
+                            presenter.onActiveItemClick();
+                            break;
+                        case 3:
+                            presenter.onIntroduceItemClick();
+                            break;
+                        case 5:
+                            presenter.onRankItemClick();
+                            break;
+                        case 6:
+                            presenter.onJoinedItemClick();
+                            break;
+                        default:
+                            Toast.makeText(MainActivity.this, "未完成", Toast.LENGTH_SHORT).show();
+                    }
+                    drawerLayout.closeDrawer();
+                    return true;
                 }
-                return false;
-            }
-        });
+            });
+        View head=drawerLayout.getHeader();
+        View foot=drawerLayout.getStickyFooter();
+        circleImageView = (CircleImageView) head.findViewById(R.id.user_img);
+        userName = (TextView) head.findViewById(R.id.user_name);
+        userSign = (ImageView) head.findViewById(R.id.user_sign);
+        foot.findViewById(R.id.btn_exit).setOnClickListener(new OnClickListener(){
+
+                @Override
+                public void onClick(View p1)
+                {
+                    finish();
+                }
+            });
+        circleImageView.setOnClickListener(new OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    presenter.onUserImgClick();
+                }
+            });
+        userSign.setOnClickListener(new OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    presenter.onUserSignClick();
+                }
+            });
     }
 
     @Override
@@ -114,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements MainView
     @Override
     public void setUserImg(String path)
     {
-        if(path==null)
+        if (path == null)
         {
             circleImageView.setImageResource(R.drawable.myface);
         }
@@ -133,27 +165,27 @@ public class MainActivity extends AppCompatActivity implements MainView
     @Override
     public void setSignState(Boolean state)
     {
-        if (state==null)
+        if (state == null)
         {
             userSign.setVisibility(View.INVISIBLE);
         }
         else
         {
             userSign.setVisibility(View.VISIBLE);
-            userSign.setImageResource(state==true?R.drawable.ic_already_sign:R.drawable.ic_sign);
+            userSign.setImageResource(state == true ?R.drawable.ic_already_sign: R.drawable.ic_sign);
         }
     }
 
     @Override
     public void showToast(String msg)
     {
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void closeDrawer()
     {
-        drawerLayout.closeDrawers();
+        drawerLayout.closeDrawer();
     }
 
     @Override
@@ -165,27 +197,32 @@ public class MainActivity extends AppCompatActivity implements MainView
     @Override
     public void onBackPressed()
     {
+        if(getSupportFragmentManager().getBackStackEntryCount()!=0)
+        {
+            getSupportFragmentManager().popBackStack();
+            return;
+        }
         final AlertDialog.Builder builder=new AlertDialog.Builder(this);
         builder.setTitle("提示");
         builder.setMessage("确认退出?");
         builder.setPositiveButton("退出", new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
             {
-                MainActivity.super.onBackPressed();
-            }
-        });
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    MainActivity.super.onBackPressed();
+                }
+            });
         AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
         dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
             {
-                dialog.dismiss();
-            }
-        });
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    dialog.dismiss();
+                }
+            });
         dialog.show();
     }
 }

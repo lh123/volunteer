@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="home">主页</string>
+    <string name="active_predict">活动预告</string>
+    <string name="introduce">精品介绍</string>
+    <string name="luntan">公益圈</string>
+    <string name="rank">公益排名</string>
+    <string name="jointed">我的足迹</string>
+    <string name="attention">小编提醒</string>
+    <string name="feedback">意见反馈</string>
+    <string name="software_introduce">软件介绍</string>
+    
     <string name="app_name">愿益</string>
     <string name="hello_world">Hello world!</string>
     <string name="drawer_open">open</string>

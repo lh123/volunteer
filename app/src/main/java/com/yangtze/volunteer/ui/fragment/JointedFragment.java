@@ -51,10 +51,19 @@ public class JointedFragment extends Fragment
 
     private void refreshData()
     {
+        swipeRefreshLayout.post(new Runnable(){
+
+                @Override
+                public void run()
+                {
+                    swipeRefreshLayout.setRefreshing(true);
+                }
+            });
         User user= BmobUser.getCurrentUser(getContext(),User.class);
         if(user==null)
         {
             Toast.makeText(getContext(),"未登录",Toast.LENGTH_SHORT).show();
+            swipeRefreshLayout.setRefreshing(false);
             return;
         }
         BmobQuery<VolunteerActive> query=new BmobQuery<>();
