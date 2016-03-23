@@ -32,6 +32,8 @@ public class ActiveFollowFragment extends Fragment
     private RecyclerView recyclerView;
     private ActiveFollowRecyclerViewAdapter adapter;
     private boolean canExit=false;
+    
+    private List<User> data;
 
     public void setCanExit(boolean canExit)
     {
@@ -58,7 +60,10 @@ public class ActiveFollowFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
-        refreshData();
+        if(data==null)
+        {
+            refreshData();
+        }
     }
 
     public void refreshData()
@@ -71,6 +76,7 @@ public class ActiveFollowFragment extends Fragment
             @Override
             public void onSuccess(List<User> list)
             {
+                data=list;
                 canExit=false;
                 adapter.setList(list);
                 adapter.notifyDataSetChanged();

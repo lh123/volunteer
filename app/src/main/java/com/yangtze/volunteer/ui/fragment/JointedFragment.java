@@ -30,6 +30,8 @@ public class JointedFragment extends Fragment
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private ActiveRecyclerViewAdapter adapter;
+    
+    private List<VolunteerActive> data;
 
     @Nullable
     @Override
@@ -46,7 +48,10 @@ public class JointedFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
-        refreshData();
+        if(data==null)
+        {
+            refreshData();
+        }
     }
 
     private void refreshData()
@@ -75,6 +80,7 @@ public class JointedFragment extends Fragment
             @Override
             public void onSuccess(List<VolunteerActive> list)
             {
+                data=list;
                 adapter.setList(list);
                 adapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);

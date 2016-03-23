@@ -24,6 +24,9 @@ import com.yangtze.volunteer.mvp.views.MainView;
 import com.yangtze.volunteer.utils.ToolbarUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import com.yangtze.volunteer.ui.fragment.ViewPagerFragment;
 
 public class MainActivity extends AppCompatActivity implements MainView
 {
@@ -71,11 +74,13 @@ public class MainActivity extends AppCompatActivity implements MainView
             new PrimaryDrawerItem().withName(R.string.luntan).withIcon(R.drawable.ic_luntan).withIconTinted(true),
             new PrimaryDrawerItem().withName(R.string.rank).withIcon(R.drawable.ic_rank).withIconTinted(true),
             new PrimaryDrawerItem().withName(R.string.jointed).withIcon(R.drawable.ic_joined).withIconTinted(true),
-            new PrimaryDrawerItem().withName(R.string.attention).withIcon(R.drawable.ic_attention).withIconTinted(true),
             new DividerDrawerItem(),
+            new PrimaryDrawerItem().withName(R.string.attention).withIcon(R.drawable.ic_attention).withIconTinted(true),
             new PrimaryDrawerItem().withName(R.string.feedback).withIcon(R.drawable.ic_feedback).withIconTinted(true),
             new PrimaryDrawerItem().withName(R.string.software_introduce).withIcon(R.drawable.ic_introduce).withIconTinted(true)};
         db.addDrawerItems(items);
+        db.withCloseOnClick(true);
+        db.withDelayDrawerClickEvent(500);
         db.withStickyFooter(R.layout.navigation_foot);
         db.withStickyFooterShadow(false);
         drawerLayout = db.build();
@@ -104,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements MainView
                         default:
                             Toast.makeText(MainActivity.this, "未完成", Toast.LENGTH_SHORT).show();
                     }
-                    drawerLayout.closeDrawer();
+                   // drawerLayout.closeDrawer();
                     return true;
                 }
             });
@@ -200,9 +205,22 @@ public class MainActivity extends AppCompatActivity implements MainView
     @Override
     public void onBackPressed()
     {
-        if(getSupportFragmentManager().getBackStackEntryCount()!=0)
+        if(drawerLayout.isDrawerOpen())
         {
-            getSupportFragmentManager().popBackStack();
+            drawerLayout.closeDrawer();
+            return;
+        }
+        FragmentTransaction tr=getSupportFragmentManager().beginTransaction();
+        Fragment homeFragment = getSupportFragmentManager().findFragmentByTag(ViewPagerFragment.TAG);
+        if (homeFragment!=null&&!homeFragment.isVisible())
+        {
+            drawerLayout.setSelectionAtPosition(1,true);
+            for(Fragment f:getSupportFragmentManager().getFragments())
+            {
+                tr.hide(f);
+            }
+            tr.show(homeFragment);
+            tr.commit();
             return;
         }
         final AlertDialog.Builder builder=new AlertDialog.Builder(this);

@@ -11,6 +11,8 @@ import com.yangtze.volunteer.ui.adapter.NewsViewpagerAdapter;
 
 public class ViewPagerFragment extends Fragment
 {
+    public static final String TAG="ViewPagerFragment";
+    
     private TabLayout tablayout;
     private ViewPager viewpager;
     private NewsViewpagerAdapter adapter;

@@ -55,10 +55,10 @@ public class MainPresenter implements Presenter
             {
                 fragments[0]=new ViewPagerFragment();
             }
-            hideAll(transaction,fragments[0]);
+            hideAll(transaction);
             if(!fragments[0].isAdded())
             {
-                transaction.add(R.id.container, fragments[0]);
+                transaction.add(R.id.container, fragments[0],ViewPagerFragment.TAG);
             }
             transaction.show(fragments[0]).commit();
             mView.setTitle(context.getResources().getString(R.string.app_name));
@@ -164,14 +164,14 @@ public class MainPresenter implements Presenter
         {
             fragments[1]=new ActiveFragment();
         }
-        hideAll(transaction,fragments[1]);
+        hideAll(transaction);
         if(!fragments[1].isAdded())
         {
-            transaction.add(R.id.container,fragments[1]).addToBackStack(null);
+            transaction.add(R.id.container,fragments[1]);
         }
         transaction.show(fragments[1]).commit();
         mView.setTitle("活动预告");
-        mView.closeDrawer();
+        //mView.closeDrawer();
     }
 
     public void onHomeItemClick()
@@ -181,14 +181,14 @@ public class MainPresenter implements Presenter
         {
             fragments[0]=new ViewPagerFragment();
         }
-        hideAll(transaction,fragments[0]);
+        hideAll(transaction);
         if(!fragments[0].isAdded())
         {
-           transaction.add(R.id.container, fragments[0]).addToBackStack(null);
+           transaction.add(R.id.container, fragments[0],ViewPagerFragment.TAG);
         }
         transaction.show(fragments[0]).commit();
         mView.setTitle(context.getResources().getString(R.string.app_name));
-        mView.closeDrawer();
+        //mView.closeDrawer();
     }
 
     public void onJoinedItemClick()
@@ -198,14 +198,14 @@ public class MainPresenter implements Presenter
         {
             fragments[2]=new JointedFragment();
         }
-        hideAll(transaction,fragments[2]);
+        hideAll(transaction);
         if(!fragments[2].isAdded())
         {
-             transaction.add(R.id.container, fragments[2]).addToBackStack(null);
+             transaction.add(R.id.container, fragments[2]);
         }
         transaction.show(fragments[2]).commit();
         mView.setTitle(context.getResources().getString(R.string.app_name));
-        mView.closeDrawer();
+        //mView.closeDrawer();
     }
 
     public void onRankItemClick()
@@ -215,14 +215,14 @@ public class MainPresenter implements Presenter
         {
             fragments[3]=new RankFragment();
         }
-        hideAll(transaction,fragments[3]);
+        hideAll(transaction);
         if(!fragments[3].isAdded())
         {
-            transaction.add(R.id.container, fragments[3]).addToBackStack(null);
+            transaction.add(R.id.container, fragments[3]);
         }
         transaction.show(fragments[3]).commit();
         mView.setTitle(context.getResources().getString(R.string.app_name));
-        mView.closeDrawer();
+        //mView.closeDrawer();
     }
 
     public void onIntroduceItemClick()
@@ -232,14 +232,11 @@ public class MainPresenter implements Presenter
         context.startActivity(i);
     }
 
-    private void hideAll(FragmentTransaction transaction,Fragment fragment)
+    private void hideAll(FragmentTransaction transaction)
     {
         for(Fragment f:fragments)
         {
-            if(f.isAdded()&&!f.equals(fragment))
-            {
-                transaction.hide(f);
-            }
+            transaction.hide(f);
         }
     }
 }
