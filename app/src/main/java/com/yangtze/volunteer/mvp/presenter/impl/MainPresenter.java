@@ -42,6 +42,8 @@ public class MainPresenter implements Presenter
         context= (Context) mView;
         fragments=new Fragment[]{new ViewPagerFragment(),new ActiveFragment(),new JointedFragment(),new RankFragment()};
     }
+
+    
     
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -55,12 +57,12 @@ public class MainPresenter implements Presenter
             {
                 fragments[0]=new ViewPagerFragment();
             }
-            hideAll(transaction);
-            if(!fragments[0].isAdded())
-            {
-                transaction.add(R.id.container, fragments[0],ViewPagerFragment.TAG);
-            }
-            transaction.show(fragments[0]).commit();
+           // hideAll(transaction);
+//            if(!fragments[0].isAdded())
+//            {
+//                transaction.add(R.id.container, fragments[0],ViewPagerFragment.TAG);
+//            }
+            transaction.replace(R.id.container,fragments[0],ViewPagerFragment.TAG).commit();
             mView.setTitle(context.getResources().getString(R.string.app_name));
         }
 
@@ -164,12 +166,12 @@ public class MainPresenter implements Presenter
         {
             fragments[1]=new ActiveFragment();
         }
-        hideAll(transaction);
-        if(!fragments[1].isAdded())
-        {
-            transaction.add(R.id.container,fragments[1]);
-        }
-        transaction.show(fragments[1]).commit();
+        //hideAll(transaction);
+//        if(!fragments[1].isAdded())
+//        {
+//            transaction.add(R.id.container,fragments[1]);
+//        }
+        transaction.replace(R.id.container,fragments[1]).commit();
         mView.setTitle("活动预告");
         //mView.closeDrawer();
     }
@@ -181,12 +183,12 @@ public class MainPresenter implements Presenter
         {
             fragments[0]=new ViewPagerFragment();
         }
-        hideAll(transaction);
-        if(!fragments[0].isAdded())
-        {
-           transaction.add(R.id.container, fragments[0],ViewPagerFragment.TAG);
-        }
-        transaction.show(fragments[0]).commit();
+       // hideAll(transaction);
+//        if(!fragments[0].isAdded())
+//        {
+//           transaction.add(R.id.container, fragments[0],ViewPagerFragment.TAG);
+//        }
+        transaction.replace(R.id.container,fragments[0],ViewPagerFragment.TAG).commit();
         mView.setTitle(context.getResources().getString(R.string.app_name));
         //mView.closeDrawer();
     }
@@ -198,12 +200,12 @@ public class MainPresenter implements Presenter
         {
             fragments[2]=new JointedFragment();
         }
-        hideAll(transaction);
-        if(!fragments[2].isAdded())
-        {
-             transaction.add(R.id.container, fragments[2]);
-        }
-        transaction.show(fragments[2]).commit();
+        //hideAll(transaction);
+//        if(!fragments[2].isAdded())
+//        {
+//             transaction.add(R.id.container, fragments[2]);
+//        }
+        transaction.replace(R.id.container,fragments[2]).commit();
         mView.setTitle(context.getResources().getString(R.string.app_name));
         //mView.closeDrawer();
     }
@@ -215,12 +217,12 @@ public class MainPresenter implements Presenter
         {
             fragments[3]=new RankFragment();
         }
-        hideAll(transaction);
-        if(!fragments[3].isAdded())
-        {
-            transaction.add(R.id.container, fragments[3]);
-        }
-        transaction.show(fragments[3]).commit();
+       // hideAll(transaction);
+//        if(!fragments[3].isAdded())
+//        {
+//            transaction.add(R.id.container, fragments[3]);
+//        }
+        transaction.replace(R.id.container,fragments[3]).commit();
         mView.setTitle(context.getResources().getString(R.string.app_name));
         //mView.closeDrawer();
     }
@@ -231,12 +233,22 @@ public class MainPresenter implements Presenter
         i.setClass(context, IntroduceViewActivity.class);
         context.startActivity(i);
     }
-
-    private void hideAll(FragmentTransaction transaction)
+    
+    public boolean onBackPressed()
     {
-        for(Fragment f:fragments)
+        if(!fragments[0].isAdded())
         {
-            transaction.hide(f);
+            mView.getSupportFragmentManager().beginTransaction().replace(R.id.container,fragments[0],ViewPagerFragment.TAG).commit();
+            return true;
         }
+        return false;
     }
+
+//    private void hideAll(FragmentTransaction transaction)
+//    {
+//        for(Fragment f:fragments)
+//        {
+//            transaction.detach(f);
+//        }
+//    }
 }

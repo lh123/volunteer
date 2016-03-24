@@ -23,6 +23,7 @@ public class ActivePresenter implements Presenter
 {
     private ActiveView mView;
     private Context context;
+    private List<VolunteerActive> data;
 
     public ActivePresenter(ActiveView mView)
     {
@@ -33,8 +34,17 @@ public class ActivePresenter implements Presenter
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-        refreshData();
+        if(data==null)
+        {
+            refreshData();
+        }
+        else
+        {
+            mView.setData(data);
+            mView.setRefreshState(false);
+        }
     }
+
 
     public void refreshData()
     {
@@ -45,6 +55,7 @@ public class ActivePresenter implements Presenter
             @Override
             public void onSuccess(List<VolunteerActive> list)
             {
+                data=list;
                 mView.setData(list);
                 mView.setRefreshState(false);
             }

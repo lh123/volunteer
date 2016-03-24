@@ -38,12 +38,9 @@ public class FocusFragment extends Fragment
         LinearLayoutManager lm=new LinearLayoutManager(getContext());
         lm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(lm);
-        if (list == null)
-        {
-            refreshData();
-        }
         adapter = new NewsRecyclerViewAdapter(getContext());
         recyclerView.setAdapter(adapter);
+        initData();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
 
                 @Override
@@ -53,7 +50,29 @@ public class FocusFragment extends Fragment
                 }
             });
     }
+    
+    private void initData()
+    {
+        if (list == null)
+        {
+            refreshData();
+        }
+        else
+        {
+            adapter.setData(list);
+            adapter.notifyDataSetChanged();
+            swipeRefreshLayout.post(new Runnable(){
 
+                    @Override
+                    public void run()
+                    {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+        }
+    }
+    
+    
     private void refreshData()
     {
         swipeRefreshLayout.post(new Runnable(){

@@ -35,11 +35,14 @@ public class ActiveFragment extends Fragment implements ActiveView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view=inflater.inflate(R.layout.fragment_active,container,false);
-        recyclerView= (RecyclerView) view.findViewById(R.id.recycler_view);
-        actionButton= (FloatingActionButton) view.findViewById(R.id.floatButton);
-        swipeRefreshLayout= (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
-        presenter=new ActivePresenter(this);
+        View view=inflater.inflate(R.layout.fragment_active, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        actionButton = (FloatingActionButton) view.findViewById(R.id.floatButton);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
+        if(presenter==null)
+        {
+            presenter = new ActivePresenter(this);
+        }
         return view;
     }
 
@@ -50,33 +53,33 @@ public class ActiveFragment extends Fragment implements ActiveView
         super.onViewCreated(view, savedInstanceState);
         LinearLayoutManager lm=new LinearLayoutManager(getContext());
         lm.setOrientation(LinearLayoutManager.VERTICAL);
-        adapter=new ActiveRecyclerViewAdapter();
+        adapter = new ActiveRecyclerViewAdapter();
         recyclerView.setLayoutManager(lm);
         recyclerView.setAdapter(adapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
-        {
-            @Override
-            public void onRefresh()
             {
-                presenter.refreshData();
-            }
-        });
+                @Override
+                public void onRefresh()
+                {
+                    presenter.refreshData();
+                }
+            });
         actionButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
             {
-                presenter.onFloatButtonClick();
-            }
-        });
+                @Override
+                public void onClick(View v)
+                {
+                    presenter.onFloatButtonClick();
+                }
+            });
         swipeRefreshLayout.post(new Runnable()
-        {
-            @Override
-            public void run()
             {
-                swipeRefreshLayout.setRefreshing(true);
-            }
-        });
+                @Override
+                public void run()
+                {
+                    swipeRefreshLayout.setRefreshing(true);
+                }
+            });
         presenter.onCreate(savedInstanceState);
     }
 
@@ -95,9 +98,16 @@ public class ActiveFragment extends Fragment implements ActiveView
     }
 
     @Override
-    public void setRefreshState(boolean state)
+    public void setRefreshState(final boolean state)
     {
-        swipeRefreshLayout.setRefreshing(state);
+        swipeRefreshLayout.post(new Runnable(){
+
+                @Override
+                public void run()
+                {
+                    swipeRefreshLayout.setRefreshing(state);
+                }
+            });
     }
 
     @Override

@@ -30,6 +30,8 @@ public class RankFragment extends Fragment
     private RecyclerView recyclerView;
     private RankRecyclerViewAdapter adapter;
 
+    private List<User> data;
+    
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -45,9 +47,30 @@ public class RankFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
-        refreshData();
+        initData();
     }
 
+    private void initData()
+    {
+        if(data==null)
+        {
+            refreshData();
+        }
+        else
+        {
+            adapter.setList(data);
+            adapter.notifyDataSetChanged();
+            swipeRefreshLayout.post(new Runnable(){
+
+                    @Override
+                    public void run()
+                    {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+        }
+    }
+    
     private void refreshData()
     {
         swipeRefreshLayout.post(new Runnable(){
@@ -66,6 +89,7 @@ public class RankFragment extends Fragment
             @Override
             public void onSuccess(List<User> list)
             {
+                data=list;
                 adapter.setList(list);
                 adapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);

@@ -16,6 +16,9 @@ public class ViewPagerFragment extends Fragment
     private TabLayout tablayout;
     private ViewPager viewpager;
     private NewsViewpagerAdapter adapter;
+    
+    private Fragment[] fragments;
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -30,6 +33,11 @@ public class ViewPagerFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
         adapter=new NewsViewpagerAdapter(getChildFragmentManager());
+        if(fragments==null)
+        {
+            fragments=new Fragment[]{new FocusFragment(),new LocationFragment()};
+        }
+        adapter.setFragments(fragments);
         viewpager.setAdapter(adapter);
         tablayout.setupWithViewPager(viewpager);
     }

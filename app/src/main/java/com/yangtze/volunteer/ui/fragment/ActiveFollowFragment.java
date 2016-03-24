@@ -60,12 +60,47 @@ public class ActiveFollowFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
+       initData();
+    }
+
+    private void initData()
+    {
         if(data==null)
         {
             refreshData();
         }
-    }
+        else
+        {
+            adapter.setList(data);
+            adapter.notifyDataSetChanged();
+            for(User u:data)
+            {
+                if(u.getObjectId().equals(BmobUser.getCurrentUser(getContext()).getObjectId()))
+                {
+                    canExit=true;
+                    break;
+                }
+            }
+            if(canExit)
+            {
+                ((ActiveDetailActivity)getActivity()).setBtnText("退出");
+            }
+            else
+            {
+                ((ActiveDetailActivity)getActivity()).setBtnText("加入");
+            }
+            ((ActiveDetailActivity)getActivity()).hidePb();
+            swipeRefreshLayout.post(new Runnable(){
 
+                    @Override
+                    public void run()
+                    {
+                        swipeRefreshLayout.setRefreshing(true);
+                    }
+                });
+        }
+    }
+    
     public void refreshData()
     {
         BmobQuery<User> query=new BmobQuery<>();

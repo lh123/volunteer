@@ -210,17 +210,9 @@ public class MainActivity extends AppCompatActivity implements MainView
             drawerLayout.closeDrawer();
             return;
         }
-        FragmentTransaction tr=getSupportFragmentManager().beginTransaction();
-        Fragment homeFragment = getSupportFragmentManager().findFragmentByTag(ViewPagerFragment.TAG);
-        if (homeFragment!=null&&!homeFragment.isVisible())
+        if(presenter.onBackPressed())
         {
-            drawerLayout.setSelectionAtPosition(1,true);
-            for(Fragment f:getSupportFragmentManager().getFragments())
-            {
-                tr.hide(f);
-            }
-            tr.show(homeFragment);
-            tr.commit();
+            drawerLayout.setSelection(items[0]);
             return;
         }
         final AlertDialog.Builder builder=new AlertDialog.Builder(this);

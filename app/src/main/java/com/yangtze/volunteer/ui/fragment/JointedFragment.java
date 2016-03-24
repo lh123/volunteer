@@ -48,12 +48,32 @@ public class JointedFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
-        if(data==null)
+        initData();
+    }
+
+    private void initData()
+    {
+        if (data == null)
         {
             refreshData();
         }
+        else
+        {
+            adapter.setList(data);
+            adapter.notifyDataSetChanged();
+            swipeRefreshLayout.post(new Runnable(){
+
+                    @Override
+                    public void run()
+                    {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+        }
     }
 
+    
+    
     private void refreshData()
     {
         swipeRefreshLayout.post(new Runnable(){

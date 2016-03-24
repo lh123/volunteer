@@ -6,25 +6,33 @@ import com.yangtze.volunteer.ui.fragment.FocusFragment;
 import com.yangtze.volunteer.ui.fragment.LocationFragment;
 public class NewsViewpagerAdapter extends FragmentPagerAdapter
 {
-    private FocusFragment focusFragment;
-    private LocationFragment locationFragment;
+    private Fragment[] fragments;
+    
     public NewsViewpagerAdapter(FragmentManager manager)
     {
         super(manager);
-        focusFragment=new FocusFragment();
-        locationFragment=new LocationFragment();
+    }
+
+    public void setFragments(Fragment[] fragments)
+    {
+        this.fragments = fragments;
+    }
+
+    public Fragment[] getFragments()
+    {
+        return fragments;
     }
     
     @Override
     public Fragment getItem(int p1)
     {
-        return p1==0?focusFragment:locationFragment;
+        return fragments[p1];
     }
 
     @Override
     public int getCount()
     {
-        return 2;
+        return fragments.length;
     }
 
     @Override
