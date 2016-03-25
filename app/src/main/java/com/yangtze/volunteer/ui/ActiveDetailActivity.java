@@ -1,29 +1,29 @@
 package com.yangtze.volunteer.ui;
 
+import android.app.ProgressDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobRelation;
+import cn.bmob.v3.listener.DeleteListener;
+import cn.bmob.v3.listener.UpdateListener;
 import com.bumptech.glide.Glide;
 import com.yangtze.volunteer.R;
 import com.yangtze.volunteer.model.bean.User;
 import com.yangtze.volunteer.model.bean.VolunteerActive;
 import com.yangtze.volunteer.ui.adapter.ActiveDetailViewpagerAdapter;
-import com.yangtze.volunteer.utils.ToolbarUtils;
-
-import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.datatype.BmobRelation;
-import cn.bmob.v3.listener.DeleteListener;
-import cn.bmob.v3.listener.UpdateListener;
-import de.hdodenhof.circleimageview.CircleImageView;
 import com.yangtze.volunteer.ui.fragment.ActiveFollowFragment;
-import android.app.ProgressDialog;
+import com.yangtze.volunteer.utils.ToolbarUtils;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by liuhui on 2016/3/3.
@@ -50,6 +50,11 @@ public class ActiveDetailActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_detail);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP)
+        {
+            getWindow().setEnterTransition(new Explode());
+            getWindow().setExitTransition(new Explode());
+        }
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         circleImageView = (CircleImageView) findViewById(R.id.user_img);
         tvTitle = (TextView) findViewById(R.id.active_title);

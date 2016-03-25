@@ -7,12 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import com.yangtze.volunteer.App;
 import com.yangtze.volunteer.R;
 import com.yangtze.volunteer.model.NewsModel;
 import com.yangtze.volunteer.model.bean.NewsItem;
 import com.yangtze.volunteer.ui.adapter.NewsRecyclerViewAdapter;
 import java.util.ArrayList;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 public class LocationFragment extends Fragment
 {
@@ -37,6 +39,10 @@ public class LocationFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
         LinearLayoutManager lm=new LinearLayoutManager(getContext());
         lm.setOrientation(LinearLayoutManager.VERTICAL);
+        SlideInUpAnimator slideInUpAnimator = new SlideInUpAnimator();
+        slideInUpAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        //slideInUpAnimator.setAddDuration(500);
+        recyclerView.setItemAnimator(slideInUpAnimator);
         recyclerView.setLayoutManager(lm);
         adapter=new NewsRecyclerViewAdapter(getContext());
         recyclerView.setAdapter(adapter);
@@ -60,7 +66,7 @@ public class LocationFragment extends Fragment
         else
         {
             adapter.setData(list);
-            adapter.notifyDataSetChanged();
+            changeData();
             swipeRefreshLayout.post(new Runnable(){
 
                     @Override
@@ -98,10 +104,24 @@ public class LocationFragment extends Fragment
                             public void run()
                             {
                                 swipeRefreshLayout.setRefreshing(false);
-                                adapter.notifyDataSetChanged();
+                                changeData();
                             }
                         });
                 }
             }).start();
+    }
+    
+    private void changeData()
+    {
+        int preConut=adapter.getItemCount();
+        //adapter.setData(data);
+        if(preConut==0)
+        {
+            adapter.notifyItemRangeInserted(0,list.size());
+        }
+        else
+        {
+            adapter.notifyItemRangeChanged(0,list.size());
+        }
     }
 }

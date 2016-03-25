@@ -1,26 +1,25 @@
 package com.yangtze.volunteer.ui.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.FindListener;
 import com.yangtze.volunteer.R;
 import com.yangtze.volunteer.model.bean.User;
 import com.yangtze.volunteer.model.bean.VolunteerActive;
 import com.yangtze.volunteer.ui.adapter.ActiveRecyclerViewAdapter;
-
 import java.util.List;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by liuhui on 2016/3/3.
@@ -38,6 +37,11 @@ public class JointedFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.recyclerview,container,false);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP)
+        {
+            setEnterTransition(new Slide());
+            setExitTransition(new Slide());
+        }
         swipeRefreshLayout= (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
         recyclerView= (RecyclerView) view.findViewById(R.id.recycler_view);
         return view;
@@ -120,7 +124,7 @@ public class JointedFragment extends Fragment
     {
         LinearLayoutManager lm=new LinearLayoutManager(getContext());
         lm.setOrientation(LinearLayoutManager.VERTICAL);
-        adapter=new ActiveRecyclerViewAdapter();
+        adapter=new ActiveRecyclerViewAdapter(null);
         recyclerView.setLayoutManager(lm);
         recyclerView.setAdapter(adapter);
         swipeRefreshLayout.post(new Runnable()

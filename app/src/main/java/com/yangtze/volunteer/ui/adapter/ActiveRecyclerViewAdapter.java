@@ -12,6 +12,8 @@ import com.yangtze.volunteer.model.bean.VolunteerActive;
 import com.yangtze.volunteer.ui.ActiveDetailActivity;
 
 import java.util.List;
+import com.yangtze.volunteer.mvp.views.ActiveView;
+import android.support.v4.app.ActivityOptionsCompat;
 
 /**
  * Created by liuhui on 2016/3/3.
@@ -19,6 +21,12 @@ import java.util.List;
 public class ActiveRecyclerViewAdapter extends RecyclerView.Adapter
 {
     private List<VolunteerActive> list;
+    private ActiveView mView;
+
+    public ActiveRecyclerViewAdapter(ActiveView mView)
+    {
+        this.mView = mView;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
@@ -79,8 +87,16 @@ public class ActiveRecyclerViewAdapter extends RecyclerView.Adapter
                 {
                     Intent i=new Intent();
                     i.setClass(itemView.getContext(), ActiveDetailActivity.class);
-                    i.putExtra("data",list.get(getAdapterPosition()));
-                    itemView.getContext().startActivity(i);
+                    i.putExtra("data", list.get(getAdapterPosition()));
+                    if(mView!=null)
+                    {
+                        ActivityOptionsCompat op=ActivityOptionsCompat.makeSceneTransitionAnimation(mView.getActivity(), mView.getFloatButton(), "float_button");
+                        itemView.getContext().startActivity(i,op.toBundle());
+                    }
+                    else
+                    {
+                        itemView.getContext().startActivity(i);
+                    }
                 }
             });
         }

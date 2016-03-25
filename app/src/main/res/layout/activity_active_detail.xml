@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <include
+        android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
 
     <RelativeLayout
+        android:id="@+id/head"
+        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="190dp"
         android:background="@color/red">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -52,34 +55,38 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/white"
             android:textSize="30sp"/>
-
-        <Button
-            android:id="@+id/btn_join"
-            android:layout_width="wrap_content"
+        
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_alignParentBottom="true"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:layout_alignBottom="@+id/user_img"
-            android:layout_toEndOf="@+id/active_title_hint"
-            android:layout_toRightOf="@+id/active_title_hint"
-            android:background="@drawable/btn_background_selector"
-            android:text="加入"/>
-
+            app:tabMode="scrollable"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+        
     </RelativeLayout>
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        app:tabGravity="fill"
-        app:tabMode="fixed"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
+    <Button
+        android:id="@+id/btn_join"
+        android:transitionName="float_button"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/btn_circle_selector"
+        android:textColor="@color/white"
+        android:layout_alignBottom="@+id/head"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="-35dp"
+        android:text="加入"/>
+    
     <android.support.v4.view.ViewPager
+        android:layout_below="@+id/head"
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
 
-</LinearLayout>
+</RelativeLayout>

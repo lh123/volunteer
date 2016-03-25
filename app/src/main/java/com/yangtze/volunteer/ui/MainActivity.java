@@ -27,6 +27,9 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import com.yangtze.volunteer.ui.fragment.ViewPagerFragment;
+import cn.bmob.v3.BmobInstallation;
+import cn.bmob.push.BmobPush;
+import android.view.Window;
 
 public class MainActivity extends AppCompatActivity implements MainView
 {
@@ -43,11 +46,13 @@ public class MainActivity extends AppCompatActivity implements MainView
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        //supportRequestWindowFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         initToolbar();
         initDrawer();
+        initPush();
         presenter = new MainPresenter(this);
         presenter.onCreate(savedInstanceState);
     }
@@ -200,6 +205,12 @@ public class MainActivity extends AppCompatActivity implements MainView
     public void setTitle(String title)
     {
         toolbar.setTitle(title);
+    }
+    
+    private void initPush()
+    {
+        BmobInstallation.getCurrentInstallation(this).save();
+        BmobPush.startWork(this,"push");
     }
 
     @Override

@@ -15,6 +15,7 @@ import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
+import android.support.v4.app.ActivityOptionsCompat;
 
 /**
  * Created by liuhui on 2016/3/3.
@@ -73,7 +74,8 @@ public class ActivePresenter implements Presenter
     {
         Intent i=new Intent();
         i.setClass(context, PostActiveActivity.class);
-        context.startActivity(i);
+        ActivityOptionsCompat op=ActivityOptionsCompat.makeSceneTransitionAnimation(mView.getActivity(), mView.getFloatButton(), "float_button");
+        context.startActivity(i,op.toBundle());
     }
 
     @Override
